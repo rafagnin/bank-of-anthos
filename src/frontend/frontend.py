@@ -491,7 +491,7 @@ def create_app():
         os.environ.get('CONTACTS_API_ADDR'))
     app.config['PUBLIC_KEY'] = open(os.environ.get('PUB_KEY_PATH'), 'r').read()
     app.config['LOCAL_ROUTING'] = os.getenv('LOCAL_ROUTING_NUM')
-    app.config['BACKEND_TIMEOUT'] = 10  # timeout in seconds for calls to the backend
+    app.config['BACKEND_TIMEOUT'] = 60  # timeout in seconds for calls to the backend
     app.config['TOKEN_NAME'] = 'token'
     app.config['TIMESTAMP_FORMAT'] = '%Y-%m-%dT%H:%M:%S.%f%z'
     app.config['SCHEME'] = os.environ.get('SCHEME', 'http')
