@@ -12,24 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: serving.knative.dev/v1
+kind: Service
 metadata:
   name: frontend
+  namespace: boakn
 spec:
-  selector:
-    matchLabels:
-      app: frontend
   template:
-    metadata:
-      labels:
-        app: frontend
     spec:
-      serviceAccountName: default
-      terminationGracePeriodSeconds: 5
+      # serviceAccountName: default
+      # terminationGracePeriodSeconds: 5
       containers:
       - name: front
-        image: gcr.io/bank-of-anthos/frontend:v0.3.0
+        image: gcr.io/rafagnin/frontend:latest # TODO: set to fixed build revision
         volumeMounts:
         - name: publickey
           mountPath: "/root/.ssh"
@@ -37,8 +32,8 @@ spec:
         env:
         - name: VERSION
           value: "v0.3.0"
-        - name: PORT
-          value: "8080"
+        # - name: PORT
+        #   value: "8080"
         - name: ENABLE_TRACING
           value: "true"
         - name: SCHEME
@@ -64,10 +59,11 @@ spec:
         readinessProbe:
           httpGet:
             path: /ready
-            port: 8080
+            # port: 8080
           initialDelaySeconds: 10
           periodSeconds: 5
           timeoutSeconds: 10
+          failureThreshold: 10
         resources:
           requests:
             cpu: 100m
@@ -82,16 +78,7 @@ spec:
           items:
           - key: jwtRS256.key.pub
             path: publickey
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-spec:
-  type: LoadBalancer
-  selector:
-    app: frontend
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
+    traffic:
+      - latestRevision: true
+        percent: 100
+            

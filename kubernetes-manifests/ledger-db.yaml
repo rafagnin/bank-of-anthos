@@ -16,6 +16,7 @@ kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: ledger-db
+  namespace: boakn
 spec:
   serviceName: "ledger-db"
   replicas: 1
@@ -59,6 +60,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: ledger-db-config
+  namespace: boakn
   labels:
     app: postgres
 data:
@@ -73,6 +75,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ledger-db
+  namespace: boakn
 spec:
   type: ClusterIP
   selector:

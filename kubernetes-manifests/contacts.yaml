@@ -12,21 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: serving.knative.dev/v1
+kind: Service
 metadata:
   name: contacts
+  namespace: boakn
+  labels:
+    serving.knative.dev/visibility: cluster-local
 spec:
-  selector:
-    matchLabels:
-      app: contacts
   template:
-    metadata:
-      labels:
-        app: contacts
     spec:
       serviceAccountName: default
-      terminationGracePeriodSeconds: 5
+      # terminationGracePeriodSeconds: 5
       containers:
       - name: contacts
         image: gcr.io/bank-of-anthos/contacts:v0.3.0
@@ -37,8 +34,8 @@ spec:
         env:
         - name: VERSION
           value: "v0.3.0"
-        - name: PORT
-          value: "8080"
+        # - name: PORT
+        #   value: "8080"
         - name: ENABLE_TRACING
           value: "true"
         # Valid levels are debug, info, warning, error, critical.
@@ -60,10 +57,11 @@ spec:
         readinessProbe:
           httpGet:
             path: /ready
-            port: 8080
+            # port: 8080
           initialDelaySeconds: 10
           periodSeconds: 5
           timeoutSeconds: 10
+          failureThreshold: 10
       volumes:
       - name: publickey
         secret:
@@ -71,16 +69,3 @@ spec:
           items:
           - key: jwtRS256.key.pub
             path: publickey
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: contacts
-spec:
-  type: ClusterIP
-  selector:
-    app: contacts
-  ports:
-  - name: http
-    port: 8080
-    targetPort: 8080

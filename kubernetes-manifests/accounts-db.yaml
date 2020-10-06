@@ -16,6 +16,7 @@ kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: accounts-db
+  namespace: boakn
   labels:
     app: accounts-db
     tier: db
