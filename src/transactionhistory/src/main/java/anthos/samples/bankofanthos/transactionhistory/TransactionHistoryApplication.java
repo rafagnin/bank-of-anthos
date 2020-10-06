@@ -113,8 +113,7 @@ public class TransactionHistoryApplication {
             public Map<String, String> resourceLabels() {
                 Map<String, String> map = new HashMap<>();
                 String podName = System.getenv("HOSTNAME");
-                String containerName = podName.substring(0,
-                    podName.indexOf("-"));
+                String containerName = podName.indexOf("-") > -1 ? podName.substring(0,podName.indexOf("-")) : podName;
                 map.put("location", MetadataConfig.getZone());
                 map.put("container_name", containerName);
                 map.put("pod_name", podName);
