@@ -16,7 +16,6 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: userservice
-  namespace: boakn
   labels:
     serving.knative.dev/visibility: cluster-local
 spec:
@@ -26,10 +25,10 @@ spec:
       # terminationGracePeriodSeconds: 5
       containers:
       - name: userservice
-        image: gcr.io/bank-of-anthos/userservice:v0.3.0
+        image: us.gcr.io/rafagnin/bank-of-anthos/userservice:latest
         volumeMounts:
         - name: keys
-          mountPath: "/root/.ssh"
+          mountPath: "/var/.ssh"
           readOnly: true
         # ports:
         # - name: http-server
@@ -44,7 +43,7 @@ spec:
         - name: TOKEN_EXPIRY_SECONDS
           value: "3600"
         - name: PRIV_KEY_PATH
-          value: "/root/.ssh/privatekey"
+          value: "/var/.ssh/privatekey"
         # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
         - name: LOG_LEVEL
           value: "info"

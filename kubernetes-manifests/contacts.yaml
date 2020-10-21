@@ -16,7 +16,6 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: contacts
-  namespace: boakn
   labels:
     serving.knative.dev/visibility: cluster-local
 spec:
@@ -26,10 +25,10 @@ spec:
       # terminationGracePeriodSeconds: 5
       containers:
       - name: contacts
-        image: gcr.io/bank-of-anthos/contacts:v0.3.0
+        image: us.gcr.io/rafagnin/bank-of-anthos/contacts:latest
         volumeMounts:
         - name: publickey
-          mountPath: "/root/.ssh"
+          mountPath: "/var/.ssh"
           readOnly: true
         env:
         - name: VERSION

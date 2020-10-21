@@ -31,7 +31,7 @@ spec:
         image: gcr.io/bank-of-anthos/contacts:latest
         volumeMounts:
         - name: publickey
-          mountPath: "/root/.ssh"
+          mountPath: "/var/.ssh"
           readOnly: true
         env:
         - name: VERSION

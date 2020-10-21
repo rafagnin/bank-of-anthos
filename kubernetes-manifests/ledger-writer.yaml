@@ -16,20 +16,23 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: ledgerwriter
-  namespace: boakn
   labels:
     serving.knative.dev/visibility: cluster-local
 spec:
   template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
     spec:
+      timeoutSeconds: 60
       serviceAccountName: default
       # terminationGracePeriodSeconds: 5
       containers:
       - name: ledgerwriter
-        image: gcr.io/bank-of-anthos/ledgerwriter:v0.3.0
+        image: us.gcr.io/rafagnin/bank-of-anthos/ledgerwriter:latest
         volumeMounts:
         - name: publickey
-          mountPath: "/root/.ssh"
+          mountPath: "/var/.ssh"
           readOnly: true
         env:
         - name: VERSION
