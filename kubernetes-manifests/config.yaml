@@ -25,11 +25,11 @@ kind: ConfigMap
 metadata:
   name: service-api-config
 data:
-  TRANSACTIONS_API_ADDR: "ledgerwriter.boakn.svc.cluster.local"
-  BALANCES_API_ADDR: "balancereader.boakn.svc.cluster.local"
-  HISTORY_API_ADDR: "transactionhistory.boakn.svc.cluster.local"
-  CONTACTS_API_ADDR: "contacts.boakn.svc.cluster.local"
-  USERSERVICE_API_ADDR: "userservice.boakn.svc.cluster.local"
+  TRANSACTIONS_API_ADDR: "ledgerwriter.default.svc.cluster.local"
+  BALANCES_API_ADDR: "balancereader.default.svc.cluster.local"
+  HISTORY_API_ADDR: "transactionhistory.default.svc.cluster.local"
+  CONTACTS_API_ADDR: "contacts.default.svc.cluster.local"
+  USERSERVICE_API_ADDR: "userservice.default.svc.cluster.local"
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -55,8 +55,8 @@ spec:
         # If no valid level is set, will default to info.
         - name: LOG_LEVEL
           value: "info"
-        - name: NAMESPACE
-          value: "boakn"
+        # - name: NAMESPACE
+        #   value: "default"
         envFrom:
         - configMapRef:
             name: environment-config
